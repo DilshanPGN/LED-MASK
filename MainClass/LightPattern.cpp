@@ -134,3 +134,15 @@ void LightPattern::printEqualizerPattern(float vol){
 
   matrix.show();
 }
+
+
+//---------------- Change colors
+void LightPattern::setRedColor(int val){
+  colorRed = val;
+}
+void LightPattern::setGreenColor(int val){
+  colorGreen = val;
+}
+void LightPattern::setBlueColor(int val){
+  colorBlue = val;
+}

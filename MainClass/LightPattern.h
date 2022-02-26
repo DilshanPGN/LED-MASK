@@ -130,6 +130,10 @@ class LightPattern {
     void printMouthPattern(float vol);
     void shiftValuesOfLevelsArray(float vol);
     void printEqualizerPattern(float vol);
+
+    void setRedColor(int val);
+    void setGreenColor(int val);
+    void setBlueColor(int val);
     
   public:
 
