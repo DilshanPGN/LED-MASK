@@ -23,7 +23,7 @@ void LightPattern::drawMouthPattern(const bool image_addr[]){
       }
     }
 
-  \
+  
   
 
     
@@ -58,4 +58,79 @@ void LightPattern::printMouthPattern(float vol){
       silent = false;
       drawMouthPattern(mount_5);
   }
+}
+
+//---------------------------------- Equalizer Pattern()
+void LightPattern::shiftValuesOfLevelsArray(float vol){
+  
+  
+  int volLevel =0;
+    
+    if(vol<100){     
+      volLevel =0;
+    }else if(vol<100){
+      volLevel =1;
+    }else if(vol<150){
+      volLevel =1;
+    }else if(vol<200){
+      volLevel =2;
+    }else if(vol<250){
+      volLevel =3;
+      }else if(vol<400){
+      volLevel =4;
+    }else if(vol<437){
+      volLevel =5;
+    }else if(vol<475){
+      volLevel =6;
+    }else if(vol<512.5){
+      volLevel =7;
+    }
+    
+    //shift data in the array to next location
+    for(int arrIndex = 7; arrIndex>=1 ; arrIndex--){
+      
+      numberArray[arrIndex]= numberArray[arrIndex-1];        
+    }
+  
+    //last data
+    numberArray[0] = volLevel;
+
+    //re-valuing the matrix  
+    for (int col = 0 ; col<8 ; col++ ){
+
+      int peakValue = numberArray[col];
+      
+      //true
+      for(int row = 6; (6-row)< peakValue ; row--){ 
+        equalizerPatternArray[row][col] = true;
+      }
+  
+      //false
+      for(int row = 0 ; row <= (6-peakValue) ; row++){ 
+        equalizerPatternArray[row][col] = false;
+      } 
+    } 
+}
+
+
+
+
+void LightPattern::printEqualizerPattern(float vol){
+  shiftValuesOfLevelsArray(vol);
+  
+  matrix.clear();
+  for(int row =0 ; row<7 ;row++){
+    for(int col =0 ; col<8 ;col++){
+      
+
+      bool light = equalizerPatternArray[row][col];
+  
+        if (light) {
+         matrix.drawPixel(col, row, matrix.Color(colorRed,colorGreen,colorBlue));  
+        }
+    }
+  }
+
+
+  matrix.show();
 }

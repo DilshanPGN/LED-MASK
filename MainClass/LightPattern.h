@@ -128,8 +128,8 @@ class LightPattern {
 
     void drawMouthPattern(const bool image_addr[]);
     void printMouthPattern(float vol);
-
-
+    void shiftValuesOfLevelsArray(float vol);
+    void printEqualizerPattern(float vol);
     
   public:
 

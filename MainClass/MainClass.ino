@@ -12,6 +12,7 @@ void setup() {
 void loop() {
   float vol = mic.getVolume();
 
-  pattern.printMouthPattern(vol);
-  
+  //pattern.printMouthPattern(vol);
+  pattern.printEqualizerPattern(vol);
+  delay(50);
 }
