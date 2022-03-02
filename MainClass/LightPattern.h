@@ -21,8 +21,8 @@ class LightPattern {
 
     float _volume;
     //Colors
-    int colorRed = 00;
-    int colorGreen = 00;
+    int colorRed = 50;
+    int colorGreen = 50;
     int colorBlue = 50;
     
     //pattern    
@@ -134,6 +134,8 @@ class LightPattern {
     void setRedColor(int val);
     void setGreenColor(int val);
     void setBlueColor(int val);
+    void changeLedColors(int red , int green , int blue);
+    void setBrightnessValue(int val);
     
   public:
 

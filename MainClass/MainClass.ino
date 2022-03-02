@@ -11,16 +11,16 @@ String patternName = "pattern1";
 
 void setup() {
   Serial.begin(9600);
+  pinMode(3,OUTPUT);
 }
 
 void loop() {
   vol = mic.getVolume();
-
+  
   if(Serial.available() > 0){
 
     
     String serialInput = Serial.readString();
-    
     serialInput.trim();
     
     if(serialInput.equals("pattern1")){
@@ -29,12 +29,10 @@ void loop() {
       patternName = "pattern2";
     }else{
 
-      if(isRed(serialInput)){
-        changeRedColor(serialInput);
-      }else if(isGreen(serialInput)){
-        changeGreenColor(serialInput);
-      }else if(isBlue(serialInput)){
-        changeBlueColor(serialInput);
+      if(isColors(serialInput)){
+        changeLedColors(serialInput);
+      }else if(isBrightness(serialInput)){
+        changeBrightness(serialInput);
       }
       
     }  
@@ -55,26 +53,16 @@ void loop() {
 
 //methods to change colour
 
-bool isRed(String input){
+bool isColors(String input){
   String firstLetter = input.substring(0,1);
-  if(firstLetter.equals("r")){
-    changeRedColor(input);
+  if(firstLetter.equals("c")){
     return true;
   }else{
     return false;
   }
 }
 
-bool isGreen(String input){
-  String firstLetter = input.substring(0,1);
-  if(firstLetter.equals("g")){
-    return true;
-  }else{
-    return false;
-  }
-}
-
-bool isBlue(String input){
+bool isBrightness(String input){
   String firstLetter = input.substring(0,1);
   if(firstLetter.equals("b")){
     return true;
@@ -83,23 +71,49 @@ bool isBlue(String input){
   }
 }
 
+void changeBrightness(String val){
 
-
-void changeRedColor(String input){
-
-  int val = input.substring(1,input.length()).toInt();
-  pattern.setRedColor(val);
+  int intVal = val.substring(1,val.length()).toInt();
+  pattern.setBrightnessValue(intVal);
+  
   
 }
-void changeGreenColor(String input){
 
-  int val = input.substring(1,input.length()).toInt();
-  pattern.setGreenColor(val);
-  
-}
-void changeBlueColor(String input){
 
-  int val = input.substring(1,input.length()).toInt();
-  pattern.setBlueColor(val);
+void changeLedColors(String s){
+
+  int redCounter = 0;
+  int greenCounter = 0;
+  int blueCounter = 0;
+
+  String strForRed = s.substring(1,s.length());
+  for(int i = 0 ; i<strForRed.length() ; i++){
+    if(strForRed.charAt(i)!=','){
+      redCounter++;
+    }else{
+      break;
+    }
+  }
+
+  String strForGreen = strForRed.substring((redCounter+1),strForRed.length());
+  for(int i = 0 ; i<strForGreen.length() ; i++){
+    if(strForGreen.charAt(i)!=','){
+      greenCounter++;
+    }else{
+      break;
+    }
+  }
+
+  String strForBlue = strForGreen.substring((greenCounter+1),strForGreen.length());
+  blueCounter = strForBlue.length();
+
   
+  
+
+  int redInt = strForRed.substring(0,redCounter).toInt();
+  int greenInt = strForGreen.substring(0,greenCounter).toInt();
+  int blueInt = strForBlue.substring(0,blueCounter).toInt();
+
+
+  pattern.changeLedColors(redInt , greenInt , blueInt);
 }

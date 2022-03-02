@@ -42,19 +42,19 @@ void LightPattern::printMouthPattern(float vol){
           matrix.show();
         }
       }
-  } else if(vol < 325){
+  } else if(vol < 290){
       silent = false;
       drawMouthPattern(mount_1);
-  } else if(vol < 400){
+  } else if(vol < 330){
       silent = false;
       drawMouthPattern(mount_2);
-  } else if(vol < 475){
+  } else if(vol < 370){
       silent = false;
       drawMouthPattern(mount_3);
-  } else if(vol < 550){
+  } else if(vol < 410){
       silent = false;
       drawMouthPattern(mount_4);
-  } else {   
+  } else if(vol > 410){   
       silent = false;
       drawMouthPattern(mount_5);
   }
@@ -66,23 +66,23 @@ void LightPattern::shiftValuesOfLevelsArray(float vol){
   
   int volLevel =0;
     
-    if(vol<100){     
+    if(vol<200){     
       volLevel =0;
-    }else if(vol<100){
+    }else if(vol<230){
       volLevel =1;
-    }else if(vol<150){
+    }else if(vol<260){
       volLevel =1;
-    }else if(vol<200){
+    }else if(vol<290){
       volLevel =2;
-    }else if(vol<250){
+    }else if(vol<320){
       volLevel =3;
-      }else if(vol<400){
+      }else if(vol<350){
       volLevel =4;
-    }else if(vol<437){
+    }else if(vol<380){
       volLevel =5;
-    }else if(vol<475){
+    }else if(vol<410){
       volLevel =6;
-    }else if(vol<512.5){
+    }else if(vol>410){
       volLevel =7;
     }
     
@@ -145,4 +145,12 @@ void LightPattern::setGreenColor(int val){
 }
 void LightPattern::setBlueColor(int val){
   colorBlue = val;
+}
+void LightPattern::setBrightnessValue(int val){
+  matrix.setBrightness(val);
+}
+void LightPattern::changeLedColors(int red , int green , int blue){
+  colorRed = red;
+  colorGreen = green;
+  colorBlue = blue;
 }
