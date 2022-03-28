@@ -1,3 +1,5 @@
+#include <EEPROM.h>
+
 
 #include "Mic.h"
 #include "LightPattern.h"
@@ -8,10 +10,54 @@ LightPattern pattern(6);
 float vol;
 String patternName = "pattern1";
 
+//addresses
+uint8_t addrPatternNo = 1;
+uint8_t addrBrightness = 2;
+uint8_t addrColorRed = 3;
+uint8_t addrColorGreen = 4;
+uint8_t addrColorBlue = 5;
+
+//valuesFrom EEPROM
+uint8_t eepromPatternNo;
+uint8_t eepromBrightness;
+uint8_t eepromRed;
+uint8_t eepromGreen;
+uint8_t eepromBlue;
+
+
 
 void setup() {
   Serial.begin(9600);
   pinMode(3,OUTPUT);
+  
+  eepromPatternNo = EEPROM.read(addrPatternNo);
+  eepromBrightness = EEPROM.read(addrBrightness);
+  eepromRed = EEPROM.read(addrColorRed);
+  eepromGreen = EEPROM.read(addrColorGreen);
+  eepromBlue = EEPROM.read(addrColorBlue);
+
+  if(eepromPatternNo==1){
+    patternName = "pattern1";
+  }else if(eepromPatternNo==2){
+    patternName = "pattern2";
+  }
+
+  //change colors
+  String colorChangeCommand = String("c")+eepromRed+String(",")+eepromGreen+String(",")+eepromBlue;
+  changeLedColors(colorChangeCommand);
+
+  //change Brightness
+  String brighnessChangeCommand = String("b")+eepromBrightness;
+  changeBrightness(brighnessChangeCommand);
+
+  Serial.println(eepromPatternNo);
+  Serial.println(eepromBrightness);
+  Serial.println(eepromRed);
+  Serial.println(eepromGreen);
+  Serial.println(eepromBlue);
+  Serial.println(colorChangeCommand);
+  Serial.println(brighnessChangeCommand);
+  
 }
 
 void loop() {
@@ -25,8 +71,10 @@ void loop() {
     
     if(serialInput.equals("pattern1")){
       patternName = "pattern1";
+      EEPROM.write(addrPatternNo , 1);
     }else if(serialInput.equals("pattern2")){
       patternName = "pattern2";
+      EEPROM.write(addrPatternNo , 2);
     }else{
 
       if(isColors(serialInput)){
@@ -75,7 +123,7 @@ void changeBrightness(String val){
 
   int intVal = val.substring(1,val.length()).toInt();
   pattern.setBrightnessValue(intVal);
-  
+  EEPROM.write(addrBrightness , intVal);
   
 }
 
@@ -113,7 +161,9 @@ void changeLedColors(String s){
   int redInt = strForRed.substring(0,redCounter).toInt();
   int greenInt = strForGreen.substring(0,greenCounter).toInt();
   int blueInt = strForBlue.substring(0,blueCounter).toInt();
-
+  EEPROM.write(addrColorRed , redInt);
+  EEPROM.write(addrColorGreen , greenInt);
+  EEPROM.write(addrColorBlue , blueInt);
 
   pattern.changeLedColors(redInt , greenInt , blueInt);
 }
