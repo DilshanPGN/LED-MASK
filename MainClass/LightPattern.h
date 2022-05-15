@@ -15,7 +15,7 @@ class LightPattern {
   
   private:
 
-    int _ledPin      = 6;
+    int _ledPin      = 5;
     int width       = 8;
     int height      = 7;
 

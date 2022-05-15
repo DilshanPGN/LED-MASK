@@ -5,7 +5,7 @@
 #include "LightPattern.h"
 
 Mic mic(A0);
-LightPattern pattern(6);
+LightPattern pattern(5);
 
 float vol;
 String patternName = "pattern1";
