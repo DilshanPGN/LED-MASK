@@ -2,6 +2,9 @@
 
 This is a Responsive LED mask that can generate various patterns according to the gain and frequency of the voice. And there is a mobile app that changes different patterns, Colors, and Brightness of the LEDs of the mask.
 
+#### simple diagram
+<img src="images/diagram.png" height="250px">
+
 ## Demo
 
 this is a sample demo
@@ -17,12 +20,14 @@ this is a sample demo
 ## Patterns
 
 1. Mouth Pattern
+2. Equalizer pattern
+3. Frequency pattern (under development)
 
-2.  Equalizer pattern
+<img src="images/patterns.png" height="500px">
 
 ## UI
 
-
+<img src="images/UI.jpeg" height="500px">
 
 ## How to setup :
 
